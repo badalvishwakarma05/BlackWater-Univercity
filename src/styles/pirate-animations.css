@@ -3,6 +3,23 @@
    Each moving thing on this ship moves in its own wrong way.
    ================================================================== */
 
+/* ---------- ANTIGRAVITY: subtle float ---------- */
+@keyframes antigravity {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg) scale(1.01);
+  }
+  66% {
+    transform: translateY(4px) rotate(-0.5deg) scale(0.99);
+  }
+}
+
+.anim-antigravity {
+  animation: antigravity 7s ease-in-out infinite;
+}
+
 /* ---------- FLAGS: irregular wind ---------- */
 @keyframes flag-wave {
   0% { transform: skewY(0deg) scaleX(1); }
