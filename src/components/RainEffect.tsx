@@ -1,5 +1,32 @@
 import { useEffect, useRef } from "react";
 
+interface RainEffectProps {
+  speed?: number;
+  rainAmount?: number;
+  turbulence?: number;
+  background?: string;
+  color?: string;
+}
+
+interface Drop {
+  x: number;
+  y: number;
+  len: number;
+  v: number;
+  a: number;
+  dash: number[];
+  ph: number;
+}
+
+interface Splash {
+  x: number;
+  y: number;
+  r: number;
+  maxR: number;
+  a: number;
+  v: number;
+}
+
 // Slanted (60°) hyper-realistic rain animation with wind gusts & impact water splashes.
 export default function RainEffect({
   speed = 0.88,        // 0..2   fall speed (boosted for realistic downpour)
@@ -7,9 +34,9 @@ export default function RainEffect({
   turbulence = 1.85,   // 0..2.5 wind sway turbulence
   background = "transparent",
   color = "rgba(220, 235, 255, 0.85)",
-}) {
-  const ref = useRef(null);
-  const props = useRef({});
+}: RainEffectProps) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const props = useRef<RainEffectProps>({});
   props.current = { speed, rainAmount, turbulence, background, color };
 
   useEffect(() => {
@@ -19,11 +46,11 @@ export default function RainEffect({
     if (!ctx) return;
 
     const CAP = 1600;
-    const drops = [];
-    const splashes = [];
+    const drops: Drop[] = [];
+    const splashes: Splash[] = [];
     let W = 0, H = 0, S = 1, N = 0, t = 0, last = 0, raf = 0;
 
-    const spawn = (d, fill) => {
+    const spawn = (d: Partial<Drop>, fill: boolean) => {
       d.len = S * (0.045 + Math.random() ** 1.35 * 0.18);
       d.v = S * (0.65 + Math.random() ** 1.1 * 0.75);
       d.a = 0.25 + Math.random() ** 1.2 * 0.75;
@@ -36,7 +63,7 @@ export default function RainEffect({
       d.y = fill ? Math.random() * H : -d.len * dy - Math.random() * S * 0.3;
     };
 
-    const spawnSplash = (x, y) => {
+    const spawnSplash = (x: number, y: number) => {
       if (splashes.length > 120) splashes.shift();
       splashes.push({
         x,
@@ -55,13 +82,16 @@ export default function RainEffect({
       S = Math.min(W, H) || 1;
       const k = Math.min(1.9, Math.max(0.6, (S / 900) ** 0.55));
       N = Math.round(350 * k * Math.min(3, Math.max(0.6, (W * H) / (S * S))));
-      for (let i = 0; i < CAP; i++) spawn((drops[i] ||= {}), true);
+      for (let i = 0; i < CAP; i++) {
+        if (!drops[i]) drops[i] = {} as Drop;
+        spawn(drops[i], true);
+      }
     };
 
-    const loop = (ts) => {
+    const loop = (ts: number) => {
       raf = requestAnimationFrame(loop);
       const p = props.current;
-      const d_t = Math.min(0.08, (ts - (last || ts)) / 1000) * p.speed;
+      const d_t = Math.min(0.08, (ts - (last || ts)) / 1000) * (p.speed ?? 1);
       last = ts;
       t += d_t;
 
@@ -75,13 +105,13 @@ export default function RainEffect({
         ctx.clearRect(0, 0, W, H);
       } else {
         ctx.globalCompositeOperation = "source-over";
-        ctx.fillStyle = p.background;
+        ctx.fillStyle = p.background || "transparent";
         ctx.fillRect(0, 0, W, H);
       }
 
       ctx.globalCompositeOperation = "lighter";
       ctx.lineWidth = Math.max(0.95, (S / 1200) * 1.15);
-      const n = Math.min(CAP, Math.round(N * p.rainAmount));
+      const n = Math.min(CAP, Math.round(N * (p.rainAmount ?? 1)));
 
       // Render rain streaks
       for (let i = 0; i < n; i++) {
@@ -100,10 +130,10 @@ export default function RainEffect({
 
         const tx = d.x - dx * d.len;
         const ty = d.y - dy * d.len;
-        const sway = Math.sin(t * 1.2 + d.ph) * p.turbulence * d.len * 0.14;
+        const sway = Math.sin(t * 1.2 + d.ph) * (p.turbulence ?? 1) * d.len * 0.14;
 
         const g = ctx.createLinearGradient(d.x, d.y, tx, ty);
-        g.addColorStop(0, p.color);
+        g.addColorStop(0, p.color || "white");
         g.addColorStop(1, "rgba(0,0,0,0)");
 
         ctx.strokeStyle = g;
