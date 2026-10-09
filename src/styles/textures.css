@@ -1,0 +1,374 @@
+/* ==================================================================
+   TEXTURES & MATERIALS
+   Everything here is CSS gradients + tiny inline SVG noise. No images
+   were harmed (or downloaded) in the making of this ship.
+   ================================================================== */
+
+:root {
+  --noise-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .7 0 0 0 0 .65 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --noise-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .08 0 0 0 .32 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  --grain-wood: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .32' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .04 0 0 0 0 .02 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+  --rust-blotch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='turbulence' baseFrequency='.05' numOctaves='4' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .18 0 0 0 0 .08 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+}
+
+/* ---------- WOOD ---------- */
+.tx-wood {
+  background-color: var(--rotted-wood);
+  background-image:
+    repeating-linear-gradient(180deg, transparent 0 44px, rgba(0, 0, 0, 0.55) 44px 46px, rgba(255, 220, 170, 0.06) 46px 47px),
+    var(--grain-wood),
+    linear-gradient(180deg, rgba(119, 88, 58, 0.55), rgba(56, 36, 25, 0.2) 40%, rgba(82, 56, 38, 0.6));
+  color: var(--salt-ivory);
+}
+
+.tx-wood-light {
+  background-color: var(--weathered-wood);
+  background-image:
+    repeating-linear-gradient(180deg, transparent 0 38px, rgba(0, 0, 0, 0.4) 38px 40px),
+    var(--grain-wood),
+    linear-gradient(170deg, rgba(160, 120, 80, 0.4), rgba(82, 56, 38, 0.5));
+  color: var(--ink-black);
+}
+
+.tx-plank {
+  background-color: var(--shipwreck-brown);
+  background-image:
+    var(--grain-wood),
+    linear-gradient(180deg, rgba(150, 110, 70, 0.45), rgba(40, 25, 15, 0.45));
+  color: var(--salt-ivory);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 220, 170, 0.15),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- PARCHMENT ---------- */
+.tx-parchment {
+  background-color: var(--dirty-parchment);
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(255, 250, 228, 0.55), transparent 50%),
+    radial-gradient(ellipse at 88% 85%, rgba(95, 60, 20, 0.32), transparent 50%),
+    radial-gradient(circle at 72% 22%, rgba(120, 80, 30, 0.16) 0 7%, transparent 8%),
+    radial-gradient(circle at 8% 78%, rgba(120, 80, 30, 0.12) 0 10%, transparent 11%),
+    var(--noise-paper);
+  color: var(--ink-black);
+  box-shadow:
+    inset 0 0 38px rgba(70, 40, 10, 0.5),
+    0 8px 22px rgba(0, 0, 0, 0.55);
+}
+
+.tx-parchment-dark {
+  background-color: var(--aged-paper);
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(232, 221, 194, 0.35), transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(56, 36, 25, 0.45), transparent 50%),
+    var(--noise-paper);
+  color: var(--ink-black);
+  box-shadow:
+    inset 0 0 44px rgba(56, 36, 25, 0.65),
+    0 8px 22px rgba(0, 0, 0, 0.55);
+}
+
+.tx-paper-lined {
+  background-color: #d8cca9;
+  background-image:
+    linear-gradient(90deg, transparent 2.6rem, rgba(141, 29, 40, 0.45) 2.6rem 2.7rem, transparent 2.7rem),
+    repeating-linear-gradient(180deg, transparent 0 1.85rem, rgba(22, 62, 73, 0.3) 1.85rem 1.92rem),
+    radial-gradient(ellipse at 70% 30%, rgba(96, 140, 118, 0.25), transparent 50%),
+    var(--noise-paper);
+  color: var(--ink-black);
+  box-shadow: inset 0 0 30px rgba(56, 36, 25, 0.35), 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* damp: water damage blooms */
+.tx-damp {
+  background-image:
+    radial-gradient(ellipse 40% 30% at 20% 30%, rgba(53, 91, 72, 0.3), transparent 70%),
+    radial-gradient(ellipse 30% 25% at 75% 70%, rgba(22, 62, 73, 0.3), transparent 70%),
+    radial-gradient(ellipse at 18% 12%, rgba(255, 250, 228, 0.4), transparent 50%),
+    var(--noise-paper);
+  background-color: #bfb48f;
+  color: var(--ink-black);
+  box-shadow: inset 0 0 40px rgba(16, 47, 53, 0.45), 0 8px 22px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- NAUTICAL CHART ---------- */
+.tx-chart {
+  background-color: #c4b38a;
+  background-image:
+    linear-gradient(rgba(22, 62, 73, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 62, 73, 0.18) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 245, 215, 0.45), transparent 70%),
+    var(--noise-paper);
+  background-size: 48px 48px, 48px 48px, 100% 100%, auto;
+  color: var(--ink-black);
+  box-shadow: inset 0 0 50px rgba(70, 40, 10, 0.55), 0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- METALS ---------- */
+.tx-rust {
+  background-color: #3a2420;
+  background-image:
+    var(--rust-blotch),
+    radial-gradient(circle at 30% 30%, rgba(160, 80, 40, 0.35), transparent 50%),
+    linear-gradient(160deg, #4a3029, #2a1a17 60%, #552024);
+  color: var(--salt-ivory);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.4), inset 0 0 26px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.tx-brass {
+  background-color: var(--faded-gold);
+  background-image:
+    radial-gradient(circle at 30% 25%, rgba(255, 230, 160, 0.55), transparent 45%),
+    radial-gradient(circle at 75% 80%, rgba(53, 91, 72, 0.55), transparent 30%),
+    linear-gradient(135deg, #b38b3f, #6e5527);
+  color: var(--ink-black);
+}
+
+/* ---------- CANVAS (stitched sail-cloth) ---------- */
+.tx-canvas {
+  background-color: #a99c7b;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    var(--noise-paper);
+  color: var(--ink-black);
+  outline: 2px dashed rgba(56, 36, 25, 0.7);
+  outline-offset: -9px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- DEEP WATER PANEL ---------- */
+.tx-deep {
+  background-color: var(--deep-sea);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(96, 140, 118, 0.18), transparent 50%),
+    var(--noise-dark),
+    linear-gradient(180deg, var(--storm-blue), var(--blackwater));
+  color: var(--salt-ivory);
+  box-shadow: inset 0 0 0 1px rgba(96, 140, 118, 0.25), 0 10px 26px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- TORN EDGES ---------- */
+.torn-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), 96% 100%, 91% calc(100% - 7px), 86% calc(100% - 1px), 79% calc(100% - 10px), 72% calc(100% - 3px), 64% 100%, 58% calc(100% - 8px), 50% calc(100% - 2px), 43% calc(100% - 11px), 36% calc(100% - 4px), 28% 100%, 21% calc(100% - 9px), 13% calc(100% - 2px), 7% calc(100% - 8px), 0 calc(100% - 1px));
+}
+
+.torn-top {
+  clip-path: polygon(0 6px, 6% 0, 12% 8px, 19% 2px, 27% 10px, 33% 1px, 41% 7px, 49% 0, 57% 9px, 64% 3px, 72% 8px, 80% 0, 87% 6px, 94% 1px, 100% 7px, 100% 100%, 0 100%);
+}
+
+.torn-both {
+  clip-path: polygon(0 6px, 6% 0, 12% 8px, 19% 2px, 27% 10px, 33% 1px, 41% 7px, 49% 0, 57% 9px, 64% 3px, 72% 8px, 80% 0, 87% 6px, 94% 1px, 100% 7px, 100% calc(100% - 9px), 96% 100%, 91% calc(100% - 7px), 86% calc(100% - 1px), 79% calc(100% - 10px), 72% calc(100% - 3px), 64% 100%, 58% calc(100% - 8px), 50% calc(100% - 2px), 43% calc(100% - 11px), 36% calc(100% - 4px), 28% 100%, 21% calc(100% - 9px), 13% calc(100% - 2px), 7% calc(100% - 8px), 0 calc(100% - 1px));
+}
+
+.torn-corner {
+  clip-path: polygon(0 0, calc(100% - 38px) 0, calc(100% - 30px) 9px, calc(100% - 20px) 6px, calc(100% - 12px) 18px, 100% 26px, 100% 100%, 0 100%);
+}
+
+.notch-edges {
+  clip-path: polygon(2% 0, 98% 1%, 100% 12%, 99% 88%, 97% 100%, 3% 99%, 0 90%, 1% 8%);
+}
+
+/* ---------- ROPE ---------- */
+.rope-frame {
+  border: 7px solid transparent;
+  border-image: repeating-linear-gradient(45deg, #b18a52 0 5px, #6d4f2c 5px 10px, #8f6b3d 10px 14px) 7;
+}
+
+.rope-line {
+  height: 9px;
+  background: repeating-linear-gradient(60deg, #b18a52 0 6px, #6d4f2c 6px 12px);
+  border-radius: 6px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- SMALL HARDWARE ---------- */
+.nail {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #d9d2c0, #7a7466 45%, #2a2622 75%);
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(80, 40, 20, 0.35);
+  z-index: 2;
+}
+
+.nail.tl { top: 8px; left: 9px; }
+.nail.tr { top: 7px; right: 11px; }
+.nail.bl { bottom: 9px; left: 12px; }
+.nail.br { bottom: 8px; right: 8px; }
+
+.pin {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff8a80, var(--blood-red) 55%, #3a0a0e 90%);
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.55);
+  z-index: 3;
+}
+
+.tape {
+  position: absolute;
+  width: 96px;
+  height: 26px;
+  background: linear-gradient(180deg, rgba(160, 165, 160, 0.82), rgba(110, 115, 110, 0.82));
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+  clip-path: polygon(0 10%, 4% 0, 8% 14%, 12% 2%, 100% 0, 97% 20%, 100% 40%, 96% 60%, 100% 80%, 97% 100%, 0 100%, 3% 80%, 0 60%, 4% 40%);
+  z-index: 3;
+}
+
+.tape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 6px);
+}
+
+/* ---------- STAINS ---------- */
+.rum-stain {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(130, 70, 20, 0.12) 0 48%, rgba(110, 55, 15, 0.45) 52%, rgba(110, 55, 15, 0.18) 57%, transparent 62%),
+    radial-gradient(circle at 70% 30%, rgba(130, 70, 20, 0.2) 0 10%, transparent 12%);
+  transform: rotate(18deg) scaleX(1.08);
+  mix-blend-mode: multiply;
+}
+
+.ink-blot {
+  position: absolute;
+  pointer-events: none;
+  width: 70px;
+  height: 60px;
+  background: var(--ink-black);
+  opacity: 0.8;
+  clip-path: polygon(50% 0, 62% 18%, 84% 6%, 78% 32%, 100% 44%, 76% 56%, 88% 86%, 60% 72%, 48% 100%, 38% 74%, 10% 90%, 22% 58%, 0 46%, 24% 34%, 14% 8%, 38% 20%);
+}
+
+.water-stain {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 46% 54% 60% 40%;
+  border: 3px solid rgba(90, 60, 25, 0.25);
+  background: rgba(90, 60, 25, 0.08);
+}
+
+/* cracked glass overlay */
+.cracked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='rgba(232,221,194,.28)' stroke-width='.7'%3E%3Cpath d='M140 0l-12 40 30 22-26 30 8 40-30 68'/%3E%3Cpath d='M128 40l-40 10-30-20M158 62l42-8M132 92l-46 4-40 40M140 132l60 20'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  z-index: 1;
+}
+
+/* barnacle crust along an edge */
+.barnacled {
+  position: relative;
+}
+
+.barnacled::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: -6px;
+  height: 16px;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 6px 8px, #c8bfa8 0 3px, #6f6a5c 3.5px 5px, transparent 5.5px),
+    radial-gradient(circle at 18px 10px, #b9b09a 0 2px, #5f5a4e 2.5px 4px, transparent 4.5px),
+    radial-gradient(circle at 28px 6px, #d2c9b2 0 4px, #6a6456 4.5px 6px, transparent 6.5px);
+  background-size: 38px 16px, 31px 16px, 47px 16px;
+  background-repeat: repeat-x;
+  opacity: 0.9;
+}
+
+/* seaweed fringe on the bottom of a dark panel */
+.seaweed-fringe {
+  position: relative;
+}
+
+.seaweed-fringe::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 22px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='22'%3E%3Cg fill='none' stroke='%23355B48' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M8 0c-4 6 4 10 0 20'/%3E%3Cpath d='M30 0c5 5-3 8 2 14'/%3E%3Cpath d='M55 0c-3 7 5 9 1 18'/%3E%3Cpath d='M76 0c4 4-2 6 1 10'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  opacity: 0.85;
+}
+
+/* ---------- STAMPS & LABELS ---------- */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-type);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blood-red);
+  border: 4px double var(--blood-red);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  transform: rotate(-9deg);
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+}
+
+.stamp.gold {
+  color: var(--faded-gold);
+  border-color: var(--faded-gold);
+}
+
+/* ---------- PANEL SHAPES ---------- */
+.wanted-poster {
+  position: relative;
+  background-color: #cdbd93;
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgba(255, 248, 225, 0.5), transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(80, 45, 15, 0.35), transparent 30%),
+    radial-gradient(circle at 92% 8%, rgba(80, 45, 15, 0.3), transparent 25%),
+    var(--noise-paper);
+  color: var(--ink-black);
+  box-shadow: inset 0 0 30px rgba(80, 45, 15, 0.55), 0 10px 22px rgba(0, 0, 0, 0.6);
+}
+
+.sticky-note {
+  position: relative;
+  background: #d9c97a;
+  background-image: var(--noise-paper);
+  color: var(--ink-black);
+  box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-fell);
+}
+
+.sticky-note:nth-child(3n) { background-color: #c7a18a; }
+.sticky-note:nth-child(4n) { background-color: #a9bca2; }
+
+/* brig bars */
+.iron-bars {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 46px, #1d1f20 46px 52px, #5a5d5e 52px 54px, #1d1f20 54px 58px, transparent 58px 104px);
+}
+
+@media (max-width: 767px) {
+  .tx-wood,
+  .tx-wood-light {
+    background-image:
+      repeating-linear-gradient(180deg, transparent 0 44px, rgba(0, 0, 0, 0.45) 44px 46px),
+      linear-gradient(180deg, rgba(119, 88, 58, 0.5), rgba(56, 36, 25, 0.25) 40%, rgba(82, 56, 38, 0.6));
+  }
+}

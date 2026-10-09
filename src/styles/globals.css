@@ -1,0 +1,418 @@
+@import "tailwindcss";
+@import "./textures.css" layer(components);
+@import "./pirate-animations.css" layer(components);
+@import "./components.css" layer(components);
+@import "./pages.css" layer(components);
+
+/* ------------------------------------------------------------------
+   THE OFFICIAL PALETTE (as approved by a captain who is colourblind)
+   ------------------------------------------------------------------ */
+:root {
+  --ocean-abyss: #061316;
+  --blackwater: #091f22;
+  --deep-sea: #102f35;
+  --storm-blue: #163e49;
+  --rotted-wood: #382419;
+  --shipwreck-brown: #523826;
+  --weathered-wood: #77583a;
+  --seaweed-green: #355b48;
+  --brine-green: #608c76;
+  --blood-red: #8d1d28;
+  --rust-red: #552024;
+  --cursed-gold: #c39a43;
+  --faded-gold: #8e7138;
+  --salt-ivory: #e8ddc2;
+  --dirty-parchment: #c8b995;
+  --aged-paper: #9f9274;
+  --ink-black: #090807;
+
+  --header-gutter: 7rem;
+}
+
+@theme inline {
+  --color-abyss: var(--ocean-abyss);
+  --color-blackwater: var(--blackwater);
+  --color-deep: var(--deep-sea);
+  --color-storm: var(--storm-blue);
+  --color-rotwood: var(--rotted-wood);
+  --color-wreck: var(--shipwreck-brown);
+  --color-weathered: var(--weathered-wood);
+  --color-seaweed: var(--seaweed-green);
+  --color-brine: var(--brine-green);
+  --color-blood: var(--blood-red);
+  --color-rust: var(--rust-red);
+  --color-gold: var(--cursed-gold);
+  --color-fadedgold: var(--faded-gold);
+  --color-ivory: var(--salt-ivory);
+  --color-parchment: var(--dirty-parchment);
+  --color-aged: var(--aged-paper);
+  --color-ink: var(--ink-black);
+}
+
+@theme {
+  --font-pirate: "Pirata One", "UnifrakturMaguntia", "Old English Text MT", "Luminari", Georgia, serif;
+  --font-blackletter: "UnifrakturMaguntia", "Pirata One", "Old English Text MT", Georgia, serif;
+  --font-fell: "IM Fell English", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-fellsc: "IM Fell English SC", "IM Fell English", "Palatino Linotype", Georgia, serif;
+  --font-type: "Special Elite", "Courier Prime", "Courier New", ui-monospace, monospace;
+  --font-plain: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+/* ------------------------------------------------------------------
+   BASE
+   ------------------------------------------------------------------ */
+html {
+  background: var(--ocean-abyss);
+  color-scheme: dark;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: clip;
+  font-family: var(--font-fell);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--salt-ivory);
+  background-color: var(--ocean-abyss);
+  background-image:
+    radial-gradient(ellipse 120% 60% at 50% -10%, rgba(22, 62, 73, 0.75), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 10% 110%, rgba(53, 91, 72, 0.25), transparent 60%),
+    var(--noise-dark),
+    linear-gradient(180deg, var(--blackwater) 0%, var(--ocean-abyss) 55%, #030a0c 100%);
+  background-attachment: fixed;
+  text-rendering: optimizeLegibility;
+}
+
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-pirate);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--blood-red);
+  color: var(--salt-ivory);
+}
+
+:focus-visible {
+  outline: 3px dashed var(--cursed-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-paper :focus-visible,
+.tx-parchment :focus-visible {
+  outline-color: var(--blood-red);
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* Wooden scrollbar, because of course */
+* {
+  scrollbar-color: var(--weathered-wood) var(--ocean-abyss);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 300;
+  padding: 0.6rem 1rem;
+  background: var(--salt-ivory);
+  color: var(--ink-black);
+  font-family: var(--font-type);
+  border: 2px solid var(--ink-black);
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+}
+
+@layer components {
+/* ------------------------------------------------------------------
+   TYPOGRAPHIC CRIMES
+   ------------------------------------------------------------------ */
+.font-pirate { font-family: var(--font-pirate); }
+.font-blackletter { font-family: var(--font-blackletter); }
+.font-fell { font-family: var(--font-fell); }
+.font-fellsc { font-family: var(--font-fellsc); }
+.font-type { font-family: var(--font-type); }
+.font-plain { font-family: var(--font-plain); }
+
+.title-huge {
+  font-family: var(--font-pirate);
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  line-height: 0.92;
+  text-shadow:
+    2px 3px 0 var(--ink-black),
+    0 0 26px rgba(195, 154, 67, 0.18);
+}
+
+.title-big {
+  font-family: var(--font-pirate);
+  font-size: clamp(2.1rem, 5.4vw, 4rem);
+  line-height: 0.95;
+  text-shadow: 2px 2px 0 var(--ink-black);
+}
+
+.title-mid {
+  font-family: var(--font-pirate);
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  line-height: 1;
+}
+
+.kicker {
+  font-family: var(--font-type);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brine-green);
+}
+
+.tilt-l { transform: rotate(-1.2deg); }
+.tilt-r { transform: rotate(1.4deg); }
+.tilt-ll { transform: rotate(-2deg); }
+.tilt-rr { transform: rotate(2deg); }
+.baseline-wobble span:nth-child(odd) { display: inline-block; transform: translateY(0.04em) rotate(-1deg); }
+.baseline-wobble span:nth-child(even) { display: inline-block; transform: translateY(-0.05em) rotate(1.5deg); }
+.letter-drunk { letter-spacing: 0.06em; word-spacing: 0.18em; }
+
+.handwritten {
+  font-family: var(--font-fell);
+  font-style: italic;
+  color: var(--blood-red);
+  transform: rotate(-6deg);
+  display: inline-block;
+}
+
+.strike-scrawl {
+  position: relative;
+  text-decoration: none;
+  opacity: 0.75;
+}
+
+.strike-scrawl::after {
+  content: "";
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  top: 52%;
+  height: 0.16em;
+  background: var(--blood-red);
+  transform: rotate(-2deg);
+  border-radius: 40% 60% 50% 50%;
+}
+
+/* ------------------------------------------------------------------
+   LAYOUT HELPERS
+   ------------------------------------------------------------------ */
+.page-wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 768px) {
+  .page-wrap { padding-inline: 1.75rem; }
+}
+
+.app-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  outline: none;
+  padding-bottom: 3rem;
+}
+
+.demo-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border: 2px dashed currentColor;
+  color: var(--blood-red);
+  background: rgba(232, 221, 194, 0.85);
+  transform: rotate(-1.5deg);
+}
+
+.demo-label.on-dark {
+  color: var(--cursed-gold);
+  background: rgba(9, 8, 7, 0.55);
+}
+
+/* Global controls get out of the way when the on-screen keyboard is up */
+@media (max-width: 767px) {
+  body.is-typing .global-fixed {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.6);
+  }
+}
+
+.global-fixed {
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+/* Generic form controls, styled inconsistently on purpose */
+.pirate-input {
+  width: 100%;
+  font-family: var(--font-plain);
+  font-size: 1rem;
+  color: var(--ink-black);
+  background: rgba(255, 250, 235, 0.72);
+  border: 2px solid var(--shipwreck-brown);
+  border-bottom-width: 4px;
+  border-radius: 3px 9px 4px 12px;
+  padding: 0.6rem 0.75rem;
+  min-height: 2.75rem;
+  box-shadow: inset 0 2px 5px rgba(56, 36, 25, 0.25);
+}
+
+.pirate-input::placeholder {
+  color: #6c604a;
+  font-style: italic;
+}
+
+.pirate-input[aria-invalid="true"] {
+  border-color: var(--blood-red);
+  background: rgba(255, 228, 220, 0.85);
+}
+
+.pirate-input:focus-visible {
+  outline: 3px dashed var(--blood-red);
+  outline-offset: 2px;
+}
+
+select.pirate-input {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink-black) 50%),
+    linear-gradient(135deg, var(--ink-black) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 12px) 55%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2rem;
+}
+
+.pirate-input.dark {
+  color: var(--salt-ivory);
+  background: rgba(6, 19, 22, 0.75);
+  border-color: var(--weathered-wood);
+}
+
+.pirate-input.dark::placeholder { color: var(--aged-paper); }
+
+.field-label {
+  display: block;
+  font-family: var(--font-fellsc);
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.field-hint {
+  font-family: var(--font-type);
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
+.field-error {
+  display: flex;
+  gap: 0.35rem;
+  align-items: flex-start;
+  font-family: var(--font-type);
+  font-size: 0.85rem;
+  color: var(--blood-red);
+  margin-top: 0.3rem;
+  font-weight: 700;
+}
+
+.on-dark .field-error {
+  color: #ff9b8f;
+}
+
+.check-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.check-row input[type="checkbox"],
+.check-row input[type="radio"] {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-top: 0.2rem;
+  accent-color: var(--blood-red);
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------
+   STORM MODE (Konami) global overrides
+   ------------------------------------------------------------------ */
+html.storm-mode body {
+  background-image:
+    radial-gradient(ellipse 120% 60% at 50% -10%, rgba(141, 29, 40, 0.35), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 90% 110%, rgba(195, 154, 67, 0.15), transparent 60%),
+    var(--noise-dark),
+    linear-gradient(180deg, #050d10 0%, #02080a 100%);
+}
+
+html.storm-mode .storm-wobble {
+  animation: storm-wobble 2.8s ease-in-out infinite;
+}
+
+html.storm-mode .storm-wobble:nth-child(2n) {
+  animation-duration: 3.4s;
+  animation-delay: -1.1s;
+}
+
+html.storm-mode .storm-wobble:nth-child(3n) {
+  animation-duration: 2.2s;
+  animation-delay: -0.4s;
+}
+}

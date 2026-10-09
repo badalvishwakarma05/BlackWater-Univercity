@@ -1,0 +1,163 @@
+import type { PortraitSpec } from "../components/svg/FacultyPortrait";
+import type { Department } from "./departments";
+
+export interface FacultyMember {
+  id: string;
+  name: string;
+  designation: string;
+  dept: Department["id"];
+  research: string[];
+  office: string;
+  parrot: string;
+  email: string;
+  bounty: string;
+  portrait: PortraitSpec;
+}
+
+/** Entirely fictional crew. Any resemblance to real faculty is a navigational error. */
+export const FACULTY: FacultyMember[] = [
+  {
+    id: "bytebeard",
+    name: "Captain Ada Bytebeard",
+    designation: "Captain of Computer Sciences",
+    dept: "cs",
+    research: ["Recursive treasure hunting", "Garbage collection (literal, on deck)"],
+    office: "Computer Laboratory, the cabin with the blue screen",
+    parrot: "Parrot #4417 (answers to 'sudo')",
+    email: "a.bytebeard@blackwater.example",
+    bounty: "500 doubloons",
+    portrait: { skin: "#c58c62", coat: "#163e49", hat: "tricorn", hair: "long", hairColor: "#2a1f14", facialHair: "none", accessory: "parrot", earring: true },
+  },
+  {
+    id: "quicksort",
+    name: "Admiral Marlow Quicksort",
+    designation: "Admiral of Algorithms",
+    dept: "cs",
+    research: ["Shortest path to the rum barrel", "O(n²) mutinies and how to avoid them"],
+    office: "Crow's Nest, second rung from the top",
+    parrot: "Parrot #0001 (sorted first)",
+    email: "m.quicksort@blackwater.example",
+    bounty: "O(log n) doubloons",
+    portrait: { skin: "#e0b48c", coat: "#382419", hat: "captain", hatColor: "#102f35", hair: "short", hairColor: "#9f9274", facialHair: "handlebar", accessory: "monocle" },
+  },
+  {
+    id: "fuse",
+    name: "Bosun Gideon Fuse",
+    designation: "Keeper of the Broken Projector",
+    dept: "eng",
+    research: ["Projector necromancy", "HDMI archaeology"],
+    office: "Engineering Block, behind the sparks",
+    parrot: "Parrot #2209 (fluent in error beeps)",
+    email: "g.fuse@blackwater.example",
+    bounty: "One working HDMI cable",
+    portrait: { skin: "#8a5a3a", coat: "#523826", hat: "bandana", hatColor: "#355b48", hair: "none", hairColor: "#1a0f08", facialHair: "beard", accessory: "spectacles" },
+  },
+  {
+    id: "deadline",
+    name: "Dr. Penelope Deadline",
+    designation: "Professor of Applied Last-Minute Submission",
+    dept: "hum",
+    research: ["Procrastination as a navigational strategy", "The 11:59 PM phenomenon"],
+    office: "Main Academic Building, room 2359",
+    parrot: "Parrot #1159 (always late)",
+    email: "p.deadline@blackwater.example",
+    bounty: "An extension (denied)",
+    portrait: { skin: "#d9a07a", coat: "#8d1d28", hat: "bandana", hatColor: "#090807", hair: "long", hairColor: "#5a2a1a", facialHair: "none", accessory: "eyepatch", earring: true },
+  },
+  {
+    id: "grog",
+    name: "Barnaby Grog",
+    designation: "Senior Lecturer in Advanced Rum Management",
+    dept: "bus",
+    research: ["Liquid asset management", "Barrel-based accounting"],
+    office: "The Galley, under the third barrel",
+    parrot: "Parrot #0000 (has seen things)",
+    email: "b.grog@blackwater.example",
+    bounty: "The rum (gone)",
+    portrait: { skin: "#c88462", coat: "#355b48", hat: "tricorn", hair: "wild", hairColor: "#8e7138", facialHair: "handlebar", accessory: "none", scar: true },
+  },
+  {
+    id: "draft",
+    name: "Dean Morwenna Draft",
+    designation: "Dean of Unfinished Research Proposals",
+    dept: "hum",
+    research: ["Abstracts without conclusions", "The literature review that never ends"],
+    office: "Main Academic Building, the cabin full of drafts",
+    parrot: "Parrot #v7-final-FINAL",
+    email: "m.draft@blackwater.example",
+    bounty: "Chapter 2 (still pending)",
+    portrait: { skin: "#f0c8a0", coat: "#091f22", hat: "mortarboard", hair: "bun", hairColor: "#c8c0b0", facialHair: "none", accessory: "spectacles" },
+  },
+  {
+    id: "vane",
+    name: "Quartermaster Ledgerly Vane",
+    designation: "Comptroller of Misplaced Treasure",
+    dept: "bus",
+    research: ["Double-entry bookkeeping (both entries lost)", "The second treasure vault (does not exist)"],
+    office: "Administration Office, the suspicious second entrance",
+    parrot: "Parrot #1.5L (counts in lakhs)",
+    email: "l.vane@blackwater.example",
+    bounty: "18% GST on any reward",
+    portrait: { skin: "#a8744e", coat: "#2a1d14", hat: "none", hair: "short", hairColor: "#2a1f14", facialHair: "stubble", accessory: "spyglass" },
+  },
+  {
+    id: "barnacle",
+    name: "Professor Coraline Barnacle",
+    designation: "Chair of Kraken Relations",
+    dept: "mar",
+    research: ["Negotiation with cephalopods", "Barnacle-based peer review"],
+    office: "Mysterious Restricted Basement (knock twice, then run)",
+    parrot: "Parrot #8888 (has eight opinions)",
+    email: "c.barnacle@blackwater.example",
+    bounty: "Diplomatic immunity",
+    portrait: { skin: "#7a4a2e", coat: "#163e49", hat: "captain", hatColor: "#523826", hair: "long", hairColor: "#090807", facialHair: "none", accessory: "spyglass", earring: true },
+  },
+  {
+    id: "mctidal",
+    name: "Lt. Rivet McTidal",
+    designation: "Lecturer in Things That Float",
+    dept: "eng",
+    research: ["Buoyancy of exam papers", "Why the lab sinks every Thursday"],
+    office: "Engineering Block, the damp one",
+    parrot: "Parrot #H2O (waterproof)",
+    email: "r.mctidal@blackwater.example",
+    bounty: "One dry sock",
+    portrait: { skin: "#e8b890", coat: "#77583a", hat: "bandana", hatColor: "#8d1d28", hair: "short", hairColor: "#c39a43", facialHair: "stubble", accessory: "none" },
+  },
+  {
+    id: "starboard",
+    name: "Navigator Ines Starboard",
+    designation: "Reader in Celestial Wayfinding",
+    dept: "mar",
+    research: ["Navigating by the one working streetlight", "Stars that are actually satellites"],
+    office: "Observatory (a chair on the roof)",
+    parrot: "Parrot #NNE (points north-ish)",
+    email: "i.starboard@blackwater.example",
+    bounty: "A clear night",
+    portrait: { skin: "#b8845c", coat: "#102f35", hat: "tricorn", hatColor: "#355b48", hair: "bun", hairColor: "#3a2a1c", facialHair: "none", accessory: "spectacles", earring: true },
+  },
+  {
+    id: "footnote",
+    name: "Professor Silas Footnote",
+    designation: "Lecturer in Unnecessary Citations",
+    dept: "hum",
+    research: ["Ibid. studies", "Footnotes to footnotes"],
+    office: "Library annex, see footnote 4",
+    parrot: "Parrot #[citation needed]",
+    email: "s.footnote@blackwater.example",
+    bounty: "Op. cit.",
+    portrait: { skin: "#d8a888", coat: "#523826", hat: "none", hair: "wild", hairColor: "#e8e2d0", facialHair: "beard", accessory: "monocle" },
+  },
+  {
+    id: "cogsworth",
+    name: "Chief Engineer Tamsin Cogsworth",
+    designation: "Head of Leaks",
+    dept: "eng",
+    research: ["Predictive leak modelling", "Duct tape as a structural material"],
+    office: "Bilge Quarters, follow the dripping",
+    parrot: "Parrot #WD40",
+    email: "t.cogsworth@blackwater.example",
+    bounty: "A roll of duct tape",
+    portrait: { skin: "#9a6440", coat: "#382419", hat: "captain", hatColor: "#2a2622", hair: "short", hairColor: "#090807", facialHair: "none", accessory: "eyepatch" },
+  },
+];
