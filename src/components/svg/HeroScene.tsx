@@ -15,7 +15,7 @@ function wavePath(y: number, amp: number, period: number): string {
   return `${d} V 700 H 0 Z`;
 }
 
-/** The homepage hero: a rich visible ocean, a crooked moon, a wrecked fortress, and our floating ship with water reflections. */
+/** The homepage hero: a rich visible ocean, a crooked moon, a wrecked fortress, and our floating ship with water reflections and cinematic fog & lightning. */
 export function HeroScene({ className = "" }: { className?: string }) {
   const sky = useSvgId("sky");
   const moonGlow = useSvgId("moonglow");
@@ -23,6 +23,9 @@ export function HeroScene({ className = "" }: { className?: string }) {
   const seaDeep = useSvgId("seadeep");
   const shipReflect = useSvgId("shipreflect");
   const moonMask = useSvgId("moonmask");
+  const fogGrad1 = useSvgId("foggrad1");
+  const fogGrad2 = useSvgId("foggrad2");
+  const lightningGrad = useSvgId("lightninggrad");
 
   return (
     <svg
@@ -30,40 +33,65 @@ export function HeroScene({ className = "" }: { className?: string }) {
       preserveAspectRatio="xMidYMid slice"
       className={className}
       role="img"
-      aria-label="An illustrated pirate ship with tattered black sails floating gracefully on sea waves under a crooked moon."
+      aria-label="An illustrated pirate ship with tattered black sails floating gracefully on sea waves under a crooked moon with atmospheric mist and lightning."
     >
       <defs>
         <linearGradient id={sky} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#020809" />
-          <stop offset=".5" stopColor="#0a2328" />
+          <stop offset=".45" stopColor="#091f24" />
           <stop offset="1" stopColor="#123b45" />
         </linearGradient>
 
         <radialGradient id={moonGlow}>
-          <stop offset="0" stopColor="#e8ddc2" stopOpacity=".45" />
+          <stop offset="0" stopColor="#e8ddc2" stopOpacity=".55" />
+          <stop offset="50%" stopColor="#e8ddc2" stopOpacity=".15" />
           <stop offset="1" stopColor="#e8ddc2" stopOpacity="0" />
         </radialGradient>
 
-        {/* Vibrant Ocean Gradient */}
+        {/* Enhanced Darker Teal Ocean Gradients */}
         <linearGradient id={sea} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#124854" />
-          <stop offset="35%" stopColor="#0a323c" />
-          <stop offset="70%" stopColor="#061f25" />
-          <stop offset="100%" stopColor="#02090b" />
+          <stop offset="0%" stopColor="#0b3842" />
+          <stop offset="35%" stopColor="#06252d" />
+          <stop offset="70%" stopColor="#03161b" />
+          <stop offset="100%" stopColor="#010608" />
         </linearGradient>
 
         <linearGradient id={seaDeep} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#1b5c6b" />
-          <stop offset="50%" stopColor="#0e3f4a" />
-          <stop offset="100%" stopColor="#04161a" />
+          <stop offset="0%" stopColor="#114855" />
+          <stop offset="50%" stopColor="#092d37" />
+          <stop offset="100%" stopColor="#021217" />
         </linearGradient>
 
         {/* Golden/Wood Ship Reflection Gradient */}
         <radialGradient id={shipReflect} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#c39a43" stopOpacity="0.45" />
-          <stop offset="50%" stopColor="#523826" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="#d4a34b" stopOpacity="0.55" />
+          <stop offset="45%" stopColor="#523826" stopOpacity="0.35" />
+          <stop offset="85%" stopColor="#09282f" stopOpacity="0.2" />
           <stop offset="100%" stopColor="#061316" stopOpacity="0" />
         </radialGradient>
+
+        {/* Low-lying Atmospheric Fog Gradients */}
+        <linearGradient id={fogGrad1} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#69969f" stopOpacity="0" />
+          <stop offset="40%" stopColor="#43727d" stopOpacity="0.32" />
+          <stop offset="80%" stopColor="#1c4b54" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#0c2e35" stopOpacity="0" />
+        </linearGradient>
+
+        <linearGradient id={fogGrad2} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#3d6c77" stopOpacity="0" />
+          <stop offset="25%" stopColor="#588b96" stopOpacity="0.28" />
+          <stop offset="65%" stopColor="#43747f" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#25515b" stopOpacity="0" />
+        </linearGradient>
+
+        {/* Distant Lightning Glow Gradient Focused on Right-Side Sky */}
+        <linearGradient id={lightningGrad} x1="0.3" y1="0" x2="0.95" y2="0.7">
+          <stop offset="0%" stopColor="#c5e8f7" stopOpacity="0.08" />
+          <stop offset="45%" stopColor="#7ecae6" stopOpacity="0.38" />
+          <stop offset="85%" stopColor="#dff5ff" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#195565" stopOpacity="0.15" />
+        </linearGradient>
 
         <mask id={moonMask}>
           <rect width="1200" height="640" fill="#fff" />
@@ -74,6 +102,9 @@ export function HeroScene({ className = "" }: { className?: string }) {
       {/* Sky Background */}
       <rect width="1200" height="640" fill={`url(#${sky})`} />
 
+      {/* ⚡ Sheet Lightning Overlay on Sky & Clouds */}
+      <rect width="1200" height="420" fill={`url(#${lightningGrad})`} className="anim-sheet-lightning" />
+
       {/* Stars */}
       <g fill="#e8ddc2">
         {STARS.map(([x, y, r]) => (
@@ -81,19 +112,33 @@ export function HeroScene({ className = "" }: { className?: string }) {
         ))}
       </g>
 
-      {/* Crooked Moon */}
-      <circle cx="930" cy="120" r="110" fill={`url(#${moonGlow})`} />
-      <g className="anim-moon">
-        <circle cx="930" cy="120" r="52" fill="#e8ddc2" mask={`url(#${moonMask})`} />
-        <path d="M884 104l12 8-4 12 10 8" stroke="#9f9274" strokeWidth="2" fill="none" />
-        <rect x="886" y="140" width="22" height="8" rx="2" fill="#c8b995" stroke="#77583a" transform="rotate(-30 897 144)" />
-        <circle cx="900" cy="96" r="4" fill="#c8b995" />
+      {/* Crooked Moon (Drifting subtly) */}
+      <g className="anim-moon-gentle">
+        <circle cx="930" cy="120" r="110" fill={`url(#${moonGlow})`} />
+        <g className="anim-moon">
+          <circle cx="930" cy="120" r="52" fill="#e8ddc2" mask={`url(#${moonMask})`} />
+          <path d="M884 104l12 8-4 12 10 8" stroke="#9f9274" strokeWidth="2" fill="none" />
+          <rect x="886" y="140" width="22" height="8" rx="2" fill="#c8b995" stroke="#77583a" transform="rotate(-30 897 144)" />
+          <circle cx="900" cy="96" r="4" fill="#c8b995" />
+        </g>
       </g>
 
-      {/* Storm Clouds */}
+      {/* Storm Clouds (Layer 1 & Layer 2 Drifting) */}
       <g fill="#061316" opacity=".85">
-        <path d="M640 150c20-30 60-30 76-10 18-18 56-14 64 12 26-4 40 14 30 30H630c-14-8-10-24 10-32z" />
-        <path d="M60 110c14-22 44-22 56-6 14-12 40-10 46 8 18-2 28 10 20 22H52c-10-6-8-18 8-24z" />
+        <g className="anim-cloud-drift-1">
+          <path d="M640 150c20-30 60-30 76-10 18-18 56-14 64 12 26-4 40 14 30 30H630c-14-8-10-24 10-32z" />
+          <path d="M800 130c25-25 70-20 85 8 20-10 45-2 50 18 20 4 30 20 20 34H780c-10-10-8-22 20-30z" opacity="0.6" />
+        </g>
+        <g className="anim-cloud-drift-2">
+          <path d="M60 110c14-22 44-22 56-6 14-12 40-10 46 8 18-2 28 10 20 22H52c-10-6-8-18 8-24z" />
+          <path d="M220 90c18-18 50-16 62 4 16-8 36-2 40 14 16 3 24 16 16 28H210c-8-8-6-18 10-26z" opacity="0.5" />
+        </g>
+      </g>
+
+      {/* Atmospheric Mid-Sky Haze / Mist Layer */}
+      <g className="anim-fog-slow" opacity="0.65">
+        <ellipse cx="600" cy="280" rx="550" ry="60" fill={`url(#${fogGrad1})`} />
+        <ellipse cx="900" cy="310" rx="350" ry="45" fill={`url(#${fogGrad2})`} />
       </g>
 
       {/* Seagulls */}
@@ -116,7 +161,16 @@ export function HeroScene({ className = "" }: { className?: string }) {
         <path d="M1050 330l2-150h36l4 150z" fill="#24170f" stroke="#0e0905" strokeWidth="2" transform="rotate(4 1070 255)" />
         <path d="M1044 186l26-46 30 46z" fill="#382419" stroke="#0e0905" strokeWidth="2" transform="rotate(8 1072 170)" />
         <path d="M1072 140v-40" stroke="#523826" strokeWidth="3" />
-        <path d="M1074 100h30l-6 8 6 8h-30z" fill="#090807" className="anim-flag anim-flag-fast" />
+        
+        {/* Flag on castle with gentle waving animation and pirate skull cap crest */}
+        <g className="anim-flag-gentle">
+          <path d="M1074 100h34l-7 10 7 10h-34z" fill="#090807" stroke="#33241b" strokeWidth="1" />
+          <circle cx="1086" cy="110" r="3" fill="#e8ddc2" />
+          {/* mini graduation cap */}
+          <polygon points="1086,105 1092,108 1086,110 1080,108" fill="#c39a43" />
+        </g>
+
+        {/* Castle Windows Flickering Warm Light */}
         <g fill="#ffcf6b">
           <rect x="878" y="236" width="8" height="12" className="anim-flicker" />
           <rect x="884" y="276" width="8" height="12" opacity=".6" />
@@ -133,6 +187,11 @@ export function HeroScene({ className = "" }: { className?: string }) {
       {/* Kraken in Distance */}
       <g transform="translate(110 330) scale(.55)" opacity=".75">
         <path className="anim-tentacle" d="M40 160c-6-30 0-60 16-80 12-16 22-34 18-52-2-10-12-16-20-12-6 3-6 10 0 12" stroke="#2a2a3a" strokeWidth="14" fill="none" strokeLinecap="round" />
+      </g>
+
+      {/* 🌫️ Midground Swirling Fog Behind Ship and Fortress */}
+      <g className="anim-fog-fast" opacity="0.5">
+        <path d="M200 360 Q 450 330 700 365 T 1200 350 V 390 H 200 Z" fill={`url(#${fogGrad1})`} />
       </g>
 
       {/* 🌊 VISIBLE OCEAN WATER LAYERS */}
@@ -154,24 +213,30 @@ export function HeroScene({ className = "" }: { className?: string }) {
         <rect x="920" y="470" width="24" height="2" rx="1" />
       </g>
 
-      {/* ⚓ WATER REFLECTION & FOAM RIPPLE BENEATH SHIP */}
-      <g transform="translate(400 215)">
-        {/* Soft Golden Ship Reflection */}
-        <ellipse cx="200" cy="275" rx="160" ry="22" fill={`url(#${shipReflect})`} />
+      {/* ⚓ WATER REFLECTION & FOAM RIPPLE BENEATH PROMINENT SHIP */}
+      <g transform="translate(670 145) scale(0.96)">
+        {/* Soft Golden Ship Reflection with gentle pulsing ripple */}
+        <ellipse cx="200" cy="275" rx="180" ry="26" fill={`url(#${shipReflect})`} className="anim-ship-reflect" />
 
         {/* Animated Water Ripples & Foam Lines around Hull */}
-        <g opacity="0.9">
-          <ellipse cx="200" cy="268" rx="180" ry="10" fill="none" stroke="#608c76" strokeWidth="2.5" strokeDasharray="30 15 40 20" className="anim-wave" style={{ ["--wave-speed" as string]: "4.5s" }} />
-          <ellipse cx="210" cy="274" rx="140" ry="7" fill="none" stroke="#e8ddc2" strokeWidth="1.8" opacity="0.75" strokeDasharray="15 25 35 15" className="anim-wave-rev" style={{ ["--wave-speed" as string]: "5.5s" }} />
-          <ellipse cx="190" cy="282" rx="100" ry="5" fill="none" stroke="#487868" strokeWidth="1.5" opacity="0.6" />
+        <g opacity="0.95">
+          <ellipse cx="200" cy="268" rx="200" ry="14" fill="none" stroke="#7bbda3" strokeWidth="2.8" strokeDasharray="35 15 45 20" className="anim-wave" style={{ ["--wave-speed" as string]: "4.2s" }} />
+          <ellipse cx="210" cy="274" rx="160" ry="9" fill="none" stroke="#e8ddc2" strokeWidth="2" opacity="0.85" strokeDasharray="20 25 40 15" className="anim-wave-rev" style={{ ["--wave-speed" as string]: "5.2s" }} />
+          <ellipse cx="190" cy="282" rx="120" ry="7" fill="none" stroke="#5da08d" strokeWidth="1.8" opacity="0.7" />
         </g>
       </g>
 
-      {/* 🚢 THE SHIP CONTAINER (Floating on Ocean) */}
-      <g transform="translate(400 215) scale(1)">
-        <g className="anim-float-sea">
-          <ShipArt />
+      {/* 🚢 THE PROMINENT BLACKWATER SHIP (Mid-Right, Sailing Ocean Waves) */}
+      <g transform="translate(670 145) scale(0.96)">
+        <g className="anim-ship-sailing">
+          <ShipArt variant="blackwater" rocking={true} />
         </g>
+      </g>
+
+
+      {/* 🌫️ Low-Lying Atmospheric Sea Fog (Swirling around ship hull & ocean front) */}
+      <g className="anim-fog-slow" opacity="0.45">
+        <path d="M0 430 Q 300 400 600 425 T 1200 415 V 470 H 0 Z" fill={`url(#${fogGrad2})`} />
       </g>
 
       {/* Floating Debris on Water */}
@@ -204,6 +269,11 @@ export function HeroScene({ className = "" }: { className?: string }) {
       </g>
       <g className="anim-wave" style={{ ["--wave-speed" as string]: "9s" }}>
         <path d={wavePath(595, 12, 280)} fill="#02080a" />
+      </g>
+
+      {/* 🌫️ Foreground Low Creeping Sea Mist */}
+      <g className="anim-fog-fast" opacity="0.35">
+        <path d="M0 560 Q 400 535 800 555 T 1200 545 V 640 H 0 Z" fill={`url(#${fogGrad1})`} />
       </g>
     </svg>
   );

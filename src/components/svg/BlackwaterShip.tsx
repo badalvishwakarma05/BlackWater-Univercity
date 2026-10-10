@@ -84,11 +84,11 @@ export function ShipArt({ variant = "blackwater", rocking = true }: ShipArtProps
       <path d="M204 64h23l-3 12h-17z" fill="#382419" stroke="#1a0f08" />
       <path d="M206 64v-6M225 64v-6M204 58h23" stroke="#382419" strokeWidth="2" />
 
-      {/* flag on the mainmast */}
-      <g transform="translate(219 -4) scale(.34)">
-        <FlagArt fast withPole={false} />
+      {/* flag on the mainmast - waving gently in the wind with skull mark */}
+      <g transform="translate(217 -6) scale(.40)">
+        <FlagArt fast={false} withPole={false} />
       </g>
-      <path d="M332 74l18 4-18 6z" fill="#8d1d28" className="anim-flag anim-flag-fast" />
+      <path d="M332 74l18 4-18 6z" fill="#8d1d28" className="anim-flag" />
 
       {/* bowsprit + jib */}
       <path d="M368 222l50-30" stroke="#523826" strokeWidth="5" strokeLinecap="round" />
@@ -115,8 +115,18 @@ export function ShipArt({ variant = "blackwater", rocking = true }: ShipArtProps
         <path d="M140 232v10M220 233v12M300 232v8M180 262l2 8M260 263l-2 8" />
       </g>
       {/* gold trim + name */}
-      <path d="M114 232h246" stroke={trim} strokeWidth="2.5" opacity=".75" />
-      <text x="236" y="257" textAnchor="middle" fontFamily="Pirata One, Georgia, serif" fontSize="15" fill={trim} letterSpacing="3" opacity=".9">
+      <path d="M114 232h246" stroke={trim} strokeWidth="2.5" opacity=".85" />
+      <text
+        x="236"
+        y="257"
+        textAnchor="middle"
+        fontFamily="Pirata One, Georgia, serif"
+        fontSize="17"
+        fontWeight="bold"
+        fill={trim}
+        letterSpacing="3.5"
+        filter="drop-shadow(0 1px 2px rgba(0,0,0,0.95)) drop-shadow(0 0 6px rgba(195,154,67,0.5))"
+      >
         {pearl ? "THE BLACKER PEARL" : "BLACKWATER"}
       </text>
       {/* gun ports */}

@@ -20,6 +20,86 @@
   animation: antigravity 7s ease-in-out infinite;
 }
 
+/* ---------- HERO CINEMATIC ANIMATIONS ---------- */
+@keyframes goldFloatSoft {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.anim-gold-float {
+  animation: goldFloatSoft 6.5s ease-in-out infinite;
+}
+
+@keyframes goldPulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 12px rgba(195, 154, 67, 0.45), 0 0 24px rgba(195, 154, 67, 0.25);
+    opacity: 0.94;
+  }
+  50% {
+    text-shadow: 0 0 26px rgba(255, 215, 0, 0.9), 0 0 42px rgba(212, 163, 75, 0.65), 0 0 6px rgba(255, 255, 255, 0.6);
+    opacity: 1;
+  }
+}
+
+.anim-gold-pulse {
+  animation: goldPulseGlow 3.6s ease-in-out infinite;
+}
+
+.text-ornate-gold {
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(212, 163, 75, 0.75), 0 2px 4px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 215, 0, 0.4);
+  animation: goldPulseGlow 4.2s ease-in-out infinite;
+}
+
+@keyframes quoteBobWater {
+  0%, 100% {
+    transform: translateY(0px) rotate(-0.6deg);
+  }
+  32% {
+    transform: translateY(-7px) rotate(0.9deg);
+  }
+  68% {
+    transform: translateY(5px) rotate(-1.1deg);
+  }
+}
+
+.anim-quote-bob {
+  animation: quoteBobWater 5.6s ease-in-out infinite;
+  transform-origin: 50% 10%;
+}
+
+@keyframes shipSailingPitchRoll {
+  0% {
+    transform: translateY(0px) rotate(-3.4deg) skewX(-0.4deg);
+  }
+  22% {
+    transform: translateY(-19px) rotate(2.8deg) skewX(0.5deg);
+  }
+  46% {
+    transform: translateY(9px) rotate(-4.6deg) skewX(-0.8deg);
+  }
+  70% {
+    transform: translateY(-22px) rotate(3.6deg) skewX(0.7deg);
+  }
+  86% {
+    transform: translateY(11px) rotate(-1.8deg) skewX(-0.3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-3.4deg) skewX(-0.4deg);
+  }
+}
+
+.anim-ship-sailing {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+  animation: shipSailingPitchRoll 5.2s cubic-bezier(0.44, 0.06, 0.56, 0.94) infinite;
+}
+
+
 /* ---------- FLAGS: irregular wind ---------- */
 @keyframes flag-wave {
   0% { transform: skewY(0deg) scaleX(1); }
@@ -755,6 +835,138 @@
 @keyframes mustache-twitch {
   0%, 100% { transform: scaleX(1) rotate(0); }
   50% { transform: scaleX(1.12) rotate(-4deg); }
+}
+
+/* ---------- CINEMATIC ATMOSPHERE: LIGHTNING, FOG & DRIFT ---------- */
+@keyframes sheet-lightning {
+  0%, 68%, 71%, 74%, 100% {
+    opacity: 0;
+  }
+  69% {
+    opacity: 0.28;
+  }
+  70% {
+    opacity: 0.05;
+  }
+  72% {
+    opacity: 0.45;
+  }
+  73% {
+    opacity: 0.12;
+  }
+}
+
+.anim-sheet-lightning {
+  animation: sheet-lightning 12s infinite ease-in-out;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+@keyframes fog-drift-slow {
+  0% {
+    transform: translateX(-40px) scaleY(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateX(45px) scaleY(1.1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(-40px) scaleY(1);
+    opacity: 0.25;
+  }
+}
+
+@keyframes fog-drift-fast {
+  0% {
+    transform: translateX(50px) scaleX(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(-50px) scaleX(1.08);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateX(50px) scaleX(1);
+    opacity: 0.35;
+  }
+}
+
+.anim-fog-slow {
+  animation: fog-drift-slow 18s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.anim-fog-fast {
+  animation: fog-drift-fast 13s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes cloud-drift-a {
+  0% { transform: translateX(0px); }
+  50% { transform: translateX(-30px); }
+  100% { transform: translateX(0px); }
+}
+
+@keyframes cloud-drift-b {
+  0% { transform: translateX(0px); }
+  50% { transform: translateX(25px); }
+  100% { transform: translateX(0px); }
+}
+
+.anim-cloud-drift-1 {
+  animation: cloud-drift-a 24s ease-in-out infinite;
+}
+
+.anim-cloud-drift-2 {
+  animation: cloud-drift-b 30s ease-in-out infinite;
+}
+
+@keyframes moon-gentle-drift {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-6px);
+  }
+}
+
+.anim-moon-gentle {
+  animation: moon-gentle-drift 14s ease-in-out infinite;
+}
+
+@keyframes flag-gentle-wave {
+  0%, 100% {
+    transform: skewY(0deg) scaleX(1);
+  }
+  30% {
+    transform: skewY(-6deg) scaleX(0.92);
+  }
+  65% {
+    transform: skewY(4deg) scaleX(1.04);
+  }
+}
+
+.anim-flag-gentle {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: flag-gentle-wave 4s ease-in-out infinite;
+}
+
+@keyframes ship-reflect-pulse {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.08, 0.92) translateY(3px);
+    opacity: 0.7;
+  }
+}
+
+.anim-ship-reflect {
+  animation: ship-reflect-pulse 4.8s ease-in-out infinite;
+  transform-origin: 200px 275px;
 }
 
 /* ---------- REDUCED MOTION: the sea is calm today ---------- */

@@ -37,7 +37,7 @@ function Plank({ route, index, label, onNavigate }: { route: RouteInfo; index: n
 }
 
 /** The ship's wooden control panel. Vertical sidebar along the left side on desktop, collapsible manifest on mobile. */
-export function PirateNavigation() {
+export function PirateNavigation({ isHome = false }: { isHome?: boolean }) {
   const { soundOn, toggleSound, stormMode } = useExperience();
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -61,6 +61,94 @@ export function PirateNavigation() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
+
+  if (isHome) {
+    return (
+      <>
+        {/* Subtle top floating bar on Home Screen */}
+        <header className="home-top-bar fixed top-3 left-4 z-40 flex items-center gap-3">
+          <button
+            type="button"
+            className="header-tool flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#20140c]/90 text-ivory text-xs font-type border border-[#8e7138] hover:bg-[#382419] hover:border-gold hover:text-gold transition-all shadow-[0_4px_12px_rgba(0,0,0,0.6)] backdrop-blur-sm"
+            onClick={toggleSound}
+            aria-pressed={soundOn}
+            aria-label={soundOn ? "Sound on. Mute the ship." : "Sound off. Unmute the ship."}
+          >
+            {soundOn ? <Volume2 size={15} aria-hidden="true" /> : <VolumeX size={15} aria-hidden="true" />}
+            <span className="font-semibold">{soundOn ? "Audio: ON" : "Audio: MUTED"}</span>
+          </button>
+          <button
+            ref={toggleRef}
+            type="button"
+            className="header-tool flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#20140c]/90 text-ivory text-xs font-type border border-[#8e7138] hover:bg-[#382419] hover:border-gold hover:text-gold transition-all shadow-[0_4px_12px_rgba(0,0,0,0.6)] backdrop-blur-sm"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls={panelId}
+          >
+            {open ? <X size={15} aria-hidden="true" /> : <Menu size={15} aria-hidden="true" />}
+            <span className="font-semibold">All Decks</span>
+          </button>
+        </header>
+
+        {/* Slide-out Manifest Drawer when opened on Home Screen */}
+        {open && (
+          <div className="fixed inset-0 z-50 flex">
+            <div
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+              aria-hidden="true"
+            />
+            <nav
+              id={panelId}
+              aria-label="Ship's manifest"
+              className="relative w-80 max-w-[85vw] h-full manifest-panel tx-wood anim-panel-open p-6 overflow-y-auto border-r-4 border-[#382419] shadow-[8px_0_32px_rgba(0,0,0,0.9)] flex flex-col"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-[#523826]">
+                <div className="flex items-center gap-2.5">
+                  <UniversityEmblem size={40} className="shrink-0 -rotate-6" />
+                  <div>
+                    <span className="block font-pirate text-xl text-gold">Blackwater University</span>
+                    <span className="block text-[0.7rem] font-type text-parchment opacity-80">Decks Manifest</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="p-1 rounded text-parchment hover:text-gold hover:bg-black/30"
+                  aria-label="Close manifest"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="mt-5">
+                <p className="kicker mb-3 font-type text-xs text-brine uppercase tracking-wider">Main Decks</p>
+                <ul className="flex flex-col gap-2">
+                  {NAV_ROUTES.map((route, i) => (
+                    <li key={route.path}>
+                      <Plank route={route} index={i} label={label(route)} onNavigate={() => setOpen(false)} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#523826]">
+                <p className="kicker mb-2.5 font-type text-xs text-brine uppercase tracking-wider">Lower Decks</p>
+                <ul className="flex flex-col gap-1.5 font-fell text-sm">
+                  {LOWER_DECK_ROUTES.map((route, i) => (
+                    <li key={route.path}>
+                      <Plank route={route} index={i + 4} label={label(route)} onNavigate={() => setOpen(false)} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </nav>
+          </div>
+        )}
+      </>
+    );
+  }
+
 
   return (
     <aside className="ship-header ship-sidebar tx-wood lg:fixed lg:top-0 lg:left-0 lg:bottom-0 lg:w-72 lg:z-40 lg:flex lg:flex-col lg:overflow-y-auto lg:border-r-4 lg:border-[#382419] lg:shadow-[6px_0_24px_rgba(0,0,0,0.75)]">

@@ -17,12 +17,13 @@ export function DeckLoading() {
 /** The shared shell for every normal and secret deck. */
 export function UniversityLayout() {
   const { pathname } = useLocation();
+  const isHome = pathname === "/";
   return (
-    <div className="app-shell lg:pl-72">
+    <div className={`app-shell ${isHome ? "is-home-deck" : "lg:pl-72"}`}>
       <a href="#main" className="skip-link">
         Skip to main content
       </a>
-      <PirateNavigation />
+      <PirateNavigation isHome={isHome} />
       <main id="main" tabIndex={-1} className="app-main">
         <RouteErrorBoundary key={pathname}>
           <Suspense fallback={<DeckLoading />}>

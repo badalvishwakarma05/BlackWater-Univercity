@@ -45,7 +45,7 @@ export default function RainEffect({
     const ctx = cv.getContext("2d");
     if (!ctx) return;
 
-    const CAP = 1600;
+    const CAP = 2400;
     const drops: Drop[] = [];
     const splashes: Splash[] = [];
     let W = 0, H = 0, S = 1, N = 0, t = 0, last = 0, raf = 0;
@@ -64,14 +64,14 @@ export default function RainEffect({
     };
 
     const spawnSplash = (x: number, y: number) => {
-      if (splashes.length > 120) splashes.shift();
+      if (splashes.length > 150) splashes.shift();
       splashes.push({
         x,
         y,
         r: 1 + Math.random() * 3,
-        maxR: 8 + Math.random() * 12,
-        a: 0.6 + Math.random() * 0.4,
-        v: 0.6 + Math.random() * 0.8,
+        maxR: 8 + Math.random() * 14,
+        a: 0.65 + Math.random() * 0.35,
+        v: 0.65 + Math.random() * 0.85,
       });
     };
 
@@ -80,8 +80,8 @@ export default function RainEffect({
       W = cv.width = Math.round(cv.clientWidth * r);
       H = cv.height = Math.round(cv.clientHeight * r);
       S = Math.min(W, H) || 1;
-      const k = Math.min(1.9, Math.max(0.6, (S / 900) ** 0.55));
-      N = Math.round(350 * k * Math.min(3, Math.max(0.6, (W * H) / (S * S))));
+      const k = Math.min(2.1, Math.max(0.65, (S / 900) ** 0.55));
+      N = Math.round(520 * k * Math.min(3, Math.max(0.6, (W * H) / (S * S))));
       for (let i = 0; i < CAP; i++) {
         if (!drops[i]) drops[i] = {} as Drop;
         spawn(drops[i], true);

@@ -7,7 +7,6 @@ import { usePersistedState } from "../hooks/usePersistedState";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { KEYS, isStringArray } from "../lib/storage";
 import { HeroScene } from "../components/svg/HeroScene";
-import { PirateFlag } from "../components/svg/PirateFlag";
 import { ChancellorPortrait } from "../components/svg/ChancellorPortrait";
 import { WaxSeal } from "../components/svg/WaxSeal";
 import { DeptIcon } from "../components/svg/Props";
@@ -23,49 +22,106 @@ const MAP_LOCATION: Record<Department["id"], string> = { cs: "cs", eng: "eng", b
 /* ------------------------------------------------------------------ */
 
 function Hero() {
-  const { stormMode } = useExperience();
+  const { stormMode, play } = useExperience();
   return (
-    <section className="hero relative overflow-hidden" aria-labelledby="hero-title">
-      <HeroScene className="absolute inset-0 h-full w-full" />
+    <section className="hero relative overflow-hidden min-h-[min(100svh,960px)] flex items-center" aria-labelledby="hero-title">
+      <HeroScene className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 pointer-events-none" style={{ position: "absolute", inset: 0 }}>
-        <RainEffect speed={0.38} rainAmount={1} turbulence={1.62} background="transparent" />
+        <RainEffect speed={0.92} rainAmount={1.75} turbulence={2.1} background="transparent" />
       </div>
-      <div className="hero-vignette" aria-hidden="true" />
-      <div className="page-wrap relative z-10 grid min-h-[min(86svh,780px)] items-center gap-8 py-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
-        <div className="relative z-10">
-          <p className="kicker">A university, allegedly · est. 1719?</p>
-          <h1 id="hero-title" className="title-huge mt-2">
-            <span className="block -rotate-2 text-ivory">{stormMode ? "MUTINOUS" : "BLACKWATER"}</span>
-            <span className="ml-6 block rotate-1 text-gold sm:ml-14">UNIVERSITY</span>
-          </h1>
-          <p className="hero-tagline">“Not All Treasure is Silver and Gold… Some of it is CGPA”</p>
+      <div className="hero-vignette pointer-events-none" aria-hidden="true" />
 
-          <figure className="hero-quote panel on-paper">
-            <div className="panel-bg tx-parchment torn-both" aria-hidden="true" />
-            <blockquote className="panel-content">
-              <p>“This is the day you will always remember as the day you almost got a decent placement.”</p>
-            </blockquote>
-            <figcaption className="panel-content mt-2 font-type text-sm">— Captain Jack Sparrow (probably)</figcaption>
-            <span className="pin" aria-hidden="true" style={{ left: "12%" }} />
-          </figure>
+      {/* Balanced Cinematic Composition: Left 1/3 Content, Right 2/3 Dynamic Sea Backdrop */}
+      <div className="w-full relative z-10 px-6 sm:px-10 lg:px-16 py-10 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[min(88svh,840px)]">
+          {/* Left Third: Text & Interactive Stack */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start text-left z-20 max-w-lg">
+            
+            {/* Main Header (Top-Left Stack with Subtle Gold Float & Pulsing Glow) */}
+            <div className="hero-header-group anim-gold-float text-left">
+              <p className="kicker text-sm sm:text-base font-bold text-gold tracking-widest uppercase anim-gold-pulse">
+                A UNIVERSITY, ALLEGEDLY • EST. 1719?
+              </p>
+              <h1 id="hero-title" className="title-huge mt-2 text-left flex flex-col items-start leading-[0.95]">
+                <span className="block text-ivory tracking-widest drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)]">
+                  {stormMode ? "MUTINOUS" : "BLACKWATER"}
+                </span>
+                <span className="block text-gold tracking-widest mt-1 text-ornate-gold">
+                  UNIVERSITY
+                </span>
+              </h1>
+              <p className="hero-tagline mt-3 text-left text-sm sm:text-base opacity-90 text-parchment font-fell italic">
+                “Not All Treasure is Silver and Gold… Some of it is CGPA”
+              </p>
+            </div>
 
-          <div className="hero-actions">
-            <CrookedLink to="/admissions" variant="plank" size="lg" tilt={-2}>
-              Join the Crew
-            </CrookedLink>
-            <CrookedLink to="/attendance" variant="seal" tilt={1.5}>
-              Calculate My Academic Damage
-            </CrookedLink>
-            <CrookedLink to="/treasure-maps" variant="compass" tilt={-1}>
-              Find the Treasure
-            </CrookedLink>
-            <CrookedLink to="/faculty" variant="parchment" tilt={2.2}>
-              View the Crew Manifest
-            </CrookedLink>
+            {/* Mid-Left: Torn Parchment Quote Box (with Sharp Red Pin & Water Bobbing Motion) */}
+            <figure className="hero-quote-left anim-quote-bob panel on-paper my-6 w-full relative">
+              <div className="panel-bg tx-parchment torn-both" aria-hidden="true" />
+              <blockquote className="panel-content text-center py-5 px-6 sm:px-8 flex flex-col items-center">
+                <p className="text-lg sm:text-xl leading-relaxed font-fell text-[#1a110a] font-medium">
+                  “This is the day you will always remember as the day you almost got a decent placement.”
+                </p>
+                <figcaption className="mt-3 font-type text-xs sm:text-sm text-[#483320] tracking-wide font-semibold">
+                  — Captain Jack Sparrow (probably)
+                </figcaption>
+              </blockquote>
+              {/* Sharp Red Pin */}
+              <span className="pin-sharp shadow-xl drop-shadow-lg z-20" aria-hidden="true" />
+            </figure>
+
+            {/* Lower-Left: Clean Vertical Stack of 4 Action Buttons with Metallic Clink & Gold Hover Glow */}
+            <div className="hero-nav-stack flex flex-col gap-3 w-full">
+              <CrookedLink
+                to="/admissions"
+                variant="plank"
+                size="lg"
+                tilt={0}
+                onMouseEnter={() => play("clink")}
+                onClick={() => play("clink")}
+                className="hero-action-btn font-pirate text-xl tracking-wider w-full justify-center text-center"
+              >
+                Join the Crew
+              </CrookedLink>
+              <CrookedLink
+                to="/attendance"
+                variant="plank"
+                size="lg"
+                tilt={0}
+                onMouseEnter={() => play("clink")}
+                onClick={() => play("clink")}
+                className="hero-action-btn font-pirate text-xl tracking-wider w-full justify-center text-center"
+              >
+                Calculate My Academic Damage
+              </CrookedLink>
+              <CrookedLink
+                to="/treasure-maps"
+                variant="plank"
+                size="lg"
+                tilt={0}
+                onMouseEnter={() => play("clink")}
+                onClick={() => play("clink")}
+                className="hero-action-btn font-pirate text-xl tracking-wider w-full justify-center text-center"
+              >
+                Find the Treasure
+              </CrookedLink>
+              <CrookedLink
+                to="/faculty"
+                variant="plank"
+                size="lg"
+                tilt={0}
+                onMouseEnter={() => play("clink")}
+                onClick={() => play("clink")}
+                className="hero-action-btn font-pirate text-xl tracking-wider w-full justify-center text-center"
+              >
+                View the Crew Manifest
+              </CrookedLink>
+            </div>
+
           </div>
-        </div>
-        <div className="hero-flag" aria-hidden="false">
-          <PirateFlag width={320} title="The university flag: a smug skull wearing a graduation cap over crossed bones, one of which is a quill." />
+
+          {/* Right Two-Thirds: Dedicated to the Dynamic Moving Imagery */}
+          <div className="hidden lg:block lg:col-span-7 xl:col-span-8 pointer-events-none" aria-hidden="true" />
         </div>
       </div>
     </section>
